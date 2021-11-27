@@ -1,0 +1,1 @@
+web: java -jar build/libs/express-kassa-1.0-SNAPSHOT.jar
