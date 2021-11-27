@@ -38,6 +38,7 @@ public class Merchant implements UserDetails {
   }
 
   @Override
+  @JsonIgnore
   public String getUsername() {
     return email;
   }

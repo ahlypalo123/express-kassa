@@ -24,7 +24,7 @@ public class CheckController {
     }
 
     @PostMapping
-    public void saveCheck(Check check, Merchant merchant) {
+    public void saveCheck(@RequestBody Check check, Merchant merchant) {
         checkService.saveCheck(check, merchant);
     }
 }
