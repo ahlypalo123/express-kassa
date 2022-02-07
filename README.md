@@ -1,4 +1,4 @@
-# express-kassa
+# Express Kassa
 
 В проекте используются: 
   Spring Boot, 
@@ -41,7 +41,7 @@
   
     curl --location --request GET 'http://localhost:8080/product' \
     --header 'Authorization: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhaGx5cGFsbzEyM0BnbWFpbC5jb20iLCJpYXQiOjE2NDQyNTEwMTZ9.C869yRdrXIiZKkl_tS5YA-9ZM143w7_CRt0Ai35evcQG7wyTZ-3c_5xzf_iyU2CpDvgwZuZUIU41DMZY6H_nRA'
-
+  
   Пример ответа:
   
     [
@@ -79,7 +79,7 @@
         "total": "240"
     }'
     
-    Открытие смены:
+  Открытие смены:
     
       curl --location --request POST 'http://localhost:8080/shift' \
       --header 'Authorization: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhaGx5cGFsbzEyM0BnbWFpbC5jb20iLCJpYXQiOjE2NDQyNTEwMTZ9.C869yRdrXIiZKkl_tS5YA-9ZM143w7_CRt0Ai35evcQG7wyTZ-3c_5xzf_iyU2CpDvgwZuZUIU41DMZY6H_nRA' \
@@ -89,7 +89,7 @@
           "employee_name": "A.A. Hlypalo"
       }'
     
-    Закрытие смены:
+  Закрытие смены:
     
       curl --location --request POST 'http://localhost:8080/shift' \
       --header 'Authorization: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhaGx5cGFsbzEyM0BnbWFpbC5jb20iLCJpYXQiOjE2NDQyNTEwMTZ9.C869yRdrXIiZKkl_tS5YA-9ZM143w7_CRt0Ai35evcQG7wyTZ-3c_5xzf_iyU2CpDvgwZuZUIU41DMZY6H_nRA' \
@@ -99,12 +99,12 @@
           "employee_name": "A.A. Hlypalo"
       }'
       
-    Получение списка чеков:
+  Получение списка чеков:
     
       curl --location --request GET 'http://localhost:8080/check?orderColumn=TOTAL' \
       --header 'Authorization: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhaGx5cGFsbzEyM0BnbWFpbC5jb20iLCJpYXQiOjE2NDQyNTEwMTZ9.C869yRdrXIiZKkl_tS5YA-9ZM143w7_CRt0Ai35evcQG7wyTZ-3c_5xzf_iyU2CpDvgwZuZUIU41DMZY6H_nRA'
     
-    Пример отвера: 
+  Пример отвера: 
     
       [
           {
