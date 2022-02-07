@@ -28,6 +28,7 @@ public class CheckService {
                 .orElseThrow(() -> new ApiException("You have no opened shift"));
 
         check.setMerchantDetails(merchant.getDetails());
+        check.setMerchant(merchant);
         check.setDate(new Date());
         check.setShift(shift);
 
