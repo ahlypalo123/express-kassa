@@ -24,4 +24,5 @@ public class MerchantController {
   public void updateMerchantDetails(Merchant merchant, @RequestBody MerchantDetails details) {
     merchantService.updateMerchantDetails(details, merchant);
   }
+
 }

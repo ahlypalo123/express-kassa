@@ -3,6 +3,7 @@ package com.ahlypalo.express_kassa.security.config;
 import com.ahlypalo.express_kassa.security.filters.TokenAuthenticationFilter;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -19,18 +20,24 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   }
 
   @Override
+  public void configure(WebSecurity web) {
+    web.ignoring()
+      .antMatchers("/resources/public");
+  }
+
+  @Override
   protected void configure(HttpSecurity http) throws Exception {
     http = http.cors().and().csrf().disable();
 
     http = http
-            .sessionManagement()
-            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            .and();
+      .sessionManagement()
+      .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+      .and();
 
     http
       .addFilterBefore(tokenAuthenticationFilter, BasicAuthenticationFilter.class)
       .authorizeRequests()
-      .antMatchers("/auth/**", "/").permitAll()
+      .antMatchers("/auth/**", "/", "/user-photos").permitAll()
       .anyRequest().authenticated();
   }
 }
