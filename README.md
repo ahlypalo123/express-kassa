@@ -1,9 +1,9 @@
 # Express Kassa
 
 В проекте используются: 
-  Spring Boot, 
-  Spring Security, 
-  Spring Data JPA
+  * Spring Boot, 
+  * Spring Security, 
+  * Spring Data JPA
 
 Примеры основных запросов:
 
