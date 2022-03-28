@@ -1,6 +1,9 @@
 package com.ahlypalo.express_kassa.service;
 
 import com.ahlypalo.express_kassa.constants.Central;
+import com.ahlypalo.express_kassa.controller.HealthController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -15,7 +18,10 @@ import java.util.UUID;
 @Service
 public class UploadPhotoService {
 
+    private static final Logger logger = LoggerFactory.getLogger(UploadPhotoService.class);
+
     public String uploadPhoto(MultipartFile file) throws IOException {
+        logger.info("received photo {}", file.getName());
         String extension = "";
         String fn = file.getOriginalFilename();
         int index = fn.indexOf(".");
@@ -24,7 +30,7 @@ public class UploadPhotoService {
         }
         String name = UUID.randomUUID() + extension;
         Path path = saveFile(Central.DIR_PATRON_PHOTOS, name, file);
-        return path.toString();
+        return path.toString().replaceAll("\\\\", "/");
     }
 
     private Path saveFile(String uploadDir, String fileName, MultipartFile multipartFile) throws IOException {

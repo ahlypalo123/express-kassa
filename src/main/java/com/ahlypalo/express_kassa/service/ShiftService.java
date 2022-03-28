@@ -18,7 +18,7 @@ public class ShiftService {
         this.shiftRepository = shiftRepository;
     }
 
-    public void openShift(String employeeName, Merchant merchant) {
+    public Shift openShift(String employeeName, Merchant merchant) {
         if (getCurrentShift(merchant).isPresent()) {
             throw new ApiException("You have an opened shift");
         }
@@ -27,6 +27,7 @@ public class ShiftService {
         shift.setMerchant(merchant);
         shift.setEmployeeName(employeeName);
         shiftRepository.save(shift);
+        return shift;
     }
 
     public void closeShift(Merchant merchant) {

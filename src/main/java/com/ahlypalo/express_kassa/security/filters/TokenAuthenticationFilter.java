@@ -7,6 +7,7 @@ import com.ahlypalo.express_kassa.service.AuthenticationService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -33,7 +34,7 @@ public class TokenAuthenticationFilter implements Filter {
   public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
     String token = ((HttpServletRequest) request).getHeader(HttpHeaders.AUTHORIZATION);
 
-    if (token == null) {
+    if (!StringUtils.hasText(token)) {
       chain.doFilter(request, response);
       return;
     }

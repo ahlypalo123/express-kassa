@@ -1,6 +1,7 @@
 package com.ahlypalo.express_kassa.entity;
 
 import lombok.Data;
+import org.hibernate.annotations.NotFound;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -16,13 +17,23 @@ public class Check {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @OneToMany
-    private List<Product> products;
+    private List<ReceiptProduct> products;
     private Date date;
+    @Enumerated(EnumType.STRING)
+    private PaymentMethod paymentMethod;
+    private Float discount;
+    private String customerName;
+    private String employeeName;
+    private Integer customerLast4;
     private BigDecimal total;
-    @OneToOne
+    @ManyToOne
     private Shift shift;
-    @OneToOne
+    @ManyToOne
     private MerchantDetails merchantDetails;
     @ManyToOne
     private Merchant merchant;
+
+    enum PaymentMethod {
+        CASH, CARD
+    }
 }

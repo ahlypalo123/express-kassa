@@ -15,8 +15,6 @@ public class Product {
   private String name;
   private BigDecimal price;
   private String barCode;
-  @Transient
-  private BigDecimal amount;
   private String photoUrl;
   @ManyToOne
   private Merchant merchant;

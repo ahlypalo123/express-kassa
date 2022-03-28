@@ -22,8 +22,8 @@ public class ShiftController {
     }
 
     @PostMapping(headers = HttpHeaders.ACTION + "=" + Action.OPEN_SHIFT)
-    public void openShift(@RequestBody Map<String, String> body, Merchant merchant) {
-        shiftService.openShift(body.get(KEY_EMPLOYEE_NAME), merchant);
+    public Shift openShift(@RequestBody Map<String, String> body, Merchant merchant) {
+        return shiftService.openShift(body.get(KEY_EMPLOYEE_NAME), merchant);
     }
 
     @PostMapping(headers = HttpHeaders.ACTION + "=" + Action.CLOSE_SHIFT)

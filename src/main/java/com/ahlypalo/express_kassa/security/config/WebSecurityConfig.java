@@ -37,7 +37,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     http
       .addFilterBefore(tokenAuthenticationFilter, BasicAuthenticationFilter.class)
       .authorizeRequests()
-      .antMatchers("/auth/**", "/", "/user-photos").permitAll()
+      .antMatchers(
+              "/auth/**", "/",
+              "/user-photos/**",
+              "/actuator/**",
+              "/merchant/update-password"
+      ).permitAll()
       .anyRequest().authenticated();
   }
 }

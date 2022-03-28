@@ -1,5 +1,6 @@
 package com.ahlypalo.express_kassa.controller;
 
+import com.ahlypalo.express_kassa.dto.AuthDto;
 import com.ahlypalo.express_kassa.entity.Merchant;
 import com.ahlypalo.express_kassa.entity.MerchantDetails;
 import com.ahlypalo.express_kassa.service.MerchantService;
@@ -23,6 +24,11 @@ public class MerchantController {
   @PutMapping
   public void updateMerchantDetails(Merchant merchant, @RequestBody MerchantDetails details) {
     merchantService.updateMerchantDetails(details, merchant);
+  }
+
+  @PutMapping("/update-password")
+  public void updatePassword(@RequestBody AuthDto req) {
+    merchantService.updatePassword(req.getEmail(), req.getPassword());
   }
 
 }
