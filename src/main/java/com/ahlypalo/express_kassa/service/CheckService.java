@@ -30,7 +30,7 @@ public class CheckService {
     }
 
     public void saveCheck(Check check, Merchant merchant) {
-        receiptProductRepository.saveAll(check.getProducts());
+        check.setProducts((List<ReceiptProduct>) receiptProductRepository.saveAll(check.getProducts()));
 
         check.setMerchantDetails(merchant.getDetails());
         check.setMerchant(merchant);
