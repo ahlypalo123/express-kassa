@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -Dserver.port=$PORT -cp target/classes/:target/dependency
+web: java -Dserver.port=$PORT $JAVA_OPTS -jar build/libs/express-kassa-1.0-SNAPSHOT.jar
