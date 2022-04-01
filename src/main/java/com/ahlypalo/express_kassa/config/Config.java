@@ -1,5 +1,7 @@
 package com.ahlypalo.express_kassa.config;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -27,5 +29,14 @@ public class Config {
     loggingFilter.setIncludePayload(true);
     loggingFilter.setIncludeHeaders(false);
     return loggingFilter;
+  }
+
+  @Bean
+  public Cloudinary cloudinary() {
+    return new Cloudinary(ObjectUtils.asMap(
+            "cloud_name", "dhda3gpbf",
+            "api_key", "336881673728596",
+            "api_secret", "svwBm-QOH7YJqemrdx8Z71xXgbk",
+            "secure", true));
   }
 }
