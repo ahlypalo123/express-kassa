@@ -27,7 +27,7 @@ public class AuthenticationService {
     private final LoadingCache<String, CodeDto> codes = CacheBuilder.newBuilder()
             .maximumSize(10000)
             .expireAfterWrite(CODE_EXPIRATION_TIME_MIN, TimeUnit.MINUTES)
-            .build(new CacheLoader<>() {
+            .build(new CacheLoader<String, CodeDto>() {
                 @Override
                 public CodeDto load(String key) {
                     return new CodeDto(null, null);
