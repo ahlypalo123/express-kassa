@@ -3,6 +3,7 @@ package com.ahlypalo.express_kassa.service;
 import com.ahlypalo.express_kassa.entity.Merchant;
 import com.ahlypalo.express_kassa.entity.MerchantDetails;
 import com.ahlypalo.express_kassa.exception.ApiException;
+import com.ahlypalo.express_kassa.repository.MerchantDetailsRepository;
 import com.ahlypalo.express_kassa.repository.MerchantRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -13,10 +14,12 @@ import java.util.Optional;
 public class MerchantService {
 
   private final MerchantRepository merchantRepository;
+  private final MerchantDetailsRepository merchantDetailsRepository;
   private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-  public MerchantService(MerchantRepository merchantRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
+  public MerchantService(MerchantRepository merchantRepository, MerchantDetailsRepository merchantDetailsRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
     this.merchantRepository = merchantRepository;
+    this.merchantDetailsRepository = merchantDetailsRepository;
     this.bCryptPasswordEncoder = bCryptPasswordEncoder;
   }
 
@@ -29,8 +32,14 @@ public class MerchantService {
   }
 
   public void updateMerchantDetails(MerchantDetails details, Merchant merchant) {
-    merchant.setDetails(details);
-    merchantRepository.save(merchant);
+    if (merchant.getDetails() != null) {
+      details.setId(merchant.getDetails().getId());
+    }
+    merchantDetailsRepository.save(details);
+    if (merchant.getDetails() == null) {
+      merchant.setDetails(details);
+      merchantRepository.save(merchant);
+    }
   }
 
   public void updatePassword(String email, String password) {
