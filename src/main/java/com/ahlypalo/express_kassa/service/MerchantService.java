@@ -50,4 +50,12 @@ public class MerchantService {
     merchantRepository.save(merchant);
   }
 
+  public MerchantDetails getDetails(Merchant merchant) {
+    MerchantDetails details = merchant.getDetails();
+    if (details == null) {
+      throw new ApiException("Merchant details not found");
+    }
+    return details;
+  }
+
 }
