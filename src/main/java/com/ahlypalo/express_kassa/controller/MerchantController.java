@@ -17,8 +17,8 @@ public class MerchantController {
   }
 
   @GetMapping
-  public Merchant getMe(Merchant merchant) {
-    return merchant;
+  public MerchantDetails getDetails(Merchant merchant) {
+    return merchant.getDetails();
   }
 
   @PutMapping

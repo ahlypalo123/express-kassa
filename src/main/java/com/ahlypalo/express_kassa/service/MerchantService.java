@@ -35,7 +35,8 @@ public class MerchantService {
     if (merchant.getDetails() != null) {
       details.setId(merchant.getDetails().getId());
     }
-    merchantDetailsRepository.save(details);
+    Long id = merchantDetailsRepository.save(details).getId();
+    details.setId(id);
     if (merchant.getDetails() == null) {
       merchant.setDetails(details);
       merchantRepository.save(merchant);
