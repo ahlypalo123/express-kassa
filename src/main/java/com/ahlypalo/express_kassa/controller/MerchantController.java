@@ -18,7 +18,7 @@ public class MerchantController {
 
   @GetMapping
   public MerchantDetails getDetails(Merchant merchant) {
-    return merchant.getDetails();
+    return merchantService.getDetails(merchant);
   }
 
   @PutMapping
