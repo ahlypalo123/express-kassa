@@ -1,5 +1,6 @@
 package com.ahlypalo.express_kassa.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.Entity;
@@ -14,6 +15,7 @@ public class ReceiptProduct {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonIgnore
     private Long id;
     private String name;
     private BigDecimal price;
