@@ -51,10 +51,11 @@ public class CheckService {
     }
 
     public List<Check> getCheckHistory(Merchant merchant, OrderColumn orderColumn) {
-        String[] columns = (String[]) Arrays.stream(OrderColumn.values())
+        Object[] objects = Arrays.stream(OrderColumn.values())
                 .sorted(Comparator.comparingInt(e -> e == orderColumn ? 1 : 0))
                 .map(OrderColumn::getName)
                 .toArray();
+        String[] columns = Arrays.copyOf(objects, objects.length, String[].class);
         return checkRepository.getAllByMerchant(merchant, Sort.by(columns));
     }
 }
