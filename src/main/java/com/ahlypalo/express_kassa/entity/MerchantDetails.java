@@ -7,16 +7,14 @@ import java.math.BigDecimal;
 
 @Entity
 @Data
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class MerchantDetails {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String address;
     private String name;
     private BigDecimal taxPercent;
-    private String fiscalNumber;
     private String inn;
     private String taxType;
 }

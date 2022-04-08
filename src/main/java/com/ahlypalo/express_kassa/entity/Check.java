@@ -9,11 +9,10 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
-@EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "fiscal_check")
 @Data
-public class Check extends MerchantDetails {
+public class Check {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,6 +29,11 @@ public class Check extends MerchantDetails {
     private BigDecimal total;
     @ManyToOne
     private Merchant merchant;
+    private String address;
+    private String name;
+    private BigDecimal taxPercent;
+    private String inn;
+    private String taxType;
 
     enum PaymentMethod {
         CASH, CARD
