@@ -1,6 +1,7 @@
 package com.ahlypalo.express_kassa.entity;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.NotFound;
 
 import javax.persistence.*;
@@ -8,10 +9,11 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "fiscal_check")
 @Data
-public class Check {
+public class Check extends MerchantDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,10 +28,6 @@ public class Check {
     private String employeeName;
     private Integer customerLast4;
     private BigDecimal total;
-    @ManyToOne
-    private Shift shift;
-    @ManyToOne
-    private MerchantDetails merchantDetails;
     @ManyToOne
     private Merchant merchant;
 

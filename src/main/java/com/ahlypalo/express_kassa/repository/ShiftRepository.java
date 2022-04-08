@@ -8,5 +8,5 @@ import java.util.Date;
 import java.util.Optional;
 
 public interface ShiftRepository extends CrudRepository<Shift, Long> {
-    Optional<Shift> findByStartDateBeforeAndEndDateNullAndMerchant(Date date, Merchant merchant);
+
 }

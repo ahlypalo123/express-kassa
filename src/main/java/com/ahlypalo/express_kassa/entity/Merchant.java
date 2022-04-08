@@ -25,6 +25,8 @@ public class Merchant implements UserDetails {
   private String password;
   @OneToOne
   private MerchantDetails details;
+  @OneToOne
+  private Shift shift;
 
   @Override
   @JsonIgnore
@@ -65,9 +67,5 @@ public class Merchant implements UserDetails {
   @JsonIgnore
   public boolean isEnabled() {
     return true;
-  }
-
-  public MerchantDetails getDetails() {
-    return details;
   }
 }

@@ -3,42 +3,45 @@ package com.ahlypalo.express_kassa.service;
 import com.ahlypalo.express_kassa.entity.Merchant;
 import com.ahlypalo.express_kassa.entity.Shift;
 import com.ahlypalo.express_kassa.exception.ApiException;
+import com.ahlypalo.express_kassa.repository.MerchantRepository;
 import com.ahlypalo.express_kassa.repository.ShiftRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
-import java.util.Optional;
 
 @Service
 public class ShiftService {
 
     private final ShiftRepository shiftRepository;
+    private final MerchantRepository merchantRepository;
 
-    public ShiftService(ShiftRepository shiftRepository) {
+    public ShiftService(ShiftRepository shiftRepository, MerchantRepository merchantRepository) {
         this.shiftRepository = shiftRepository;
+        this.merchantRepository = merchantRepository;
     }
 
     public Shift openShift(String employeeName, Merchant merchant) {
-        if (getCurrentShift(merchant).isPresent()) {
+        if (merchant.getShift() != null) {
             throw new ApiException("You have an opened shift");
         }
         Shift shift = new Shift();
         shift.setStartDate(new Date());
-        shift.setMerchant(merchant);
         shift.setEmployeeName(employeeName);
-        shiftRepository.save(shift);
+        Long id = shiftRepository.save(shift).getId();
+        shift.setId(id);
+        merchant.setShift(shift);
+        merchantRepository.save(merchant);
         return shift;
     }
 
     public void closeShift(Merchant merchant) {
-        Shift current = getCurrentShift(merchant)
-                .orElseThrow(() -> new ApiException("You have no opened shift"));
+        if (merchant.getShift() == null) {
+            throw new ApiException("You have no opened shift");
+        }
+        Shift current = merchant.getShift();
         current.setEndDate(new Date());
         shiftRepository.save(current);
-    }
-
-    public Optional<Shift> getCurrentShift(Merchant merchant) {
-        Date now = new Date();
-        return shiftRepository.findByStartDateBeforeAndEndDateNullAndMerchant(now, merchant);
+        merchant.setShift(null);
+        merchantRepository.save(merchant);
     }
 }

@@ -33,6 +33,6 @@ public class ShiftController {
 
     @GetMapping
     public Shift getCurrentShift(Merchant merchant) {
-        return shiftService.getCurrentShift(merchant).orElse(null);
+        return merchant.getShift();
     }
 }

@@ -1,10 +1,7 @@
 package com.ahlypalo.express_kassa.service;
 
 import com.ahlypalo.express_kassa.constants.OrderColumn;
-import com.ahlypalo.express_kassa.entity.Check;
-import com.ahlypalo.express_kassa.entity.Merchant;
-import com.ahlypalo.express_kassa.entity.ReceiptProduct;
-import com.ahlypalo.express_kassa.entity.Shift;
+import com.ahlypalo.express_kassa.entity.*;
 import com.ahlypalo.express_kassa.exception.ApiException;
 import com.ahlypalo.express_kassa.repository.CheckRepository;
 import com.ahlypalo.express_kassa.repository.ProductRepository;
@@ -20,26 +17,36 @@ import java.util.Optional;
 public class CheckService {
 
     private final CheckRepository checkRepository;
-    private final ShiftService shiftService;
     private final ReceiptProductRepository receiptProductRepository;
 
-    public CheckService(CheckRepository checkRepository, ShiftService shiftService, ReceiptProductRepository receiptProductRepository) {
+    public CheckService(CheckRepository checkRepository, ReceiptProductRepository receiptProductRepository) {
         this.checkRepository = checkRepository;
-        this.shiftService = shiftService;
         this.receiptProductRepository = receiptProductRepository;
     }
 
-    public void saveCheck(Check check, Merchant merchant) {
-        check.setProducts((List<ReceiptProduct>) receiptProductRepository.saveAll(check.getProducts()));
+    public Check saveCheck(Check check, Merchant merchant) {
+        List<ReceiptProduct> products = (List<ReceiptProduct>) receiptProductRepository.saveAll(check.getProducts());
+        MerchantDetails details = merchant.getDetails();
+        Shift shift = merchant.getShift();
 
-        check.setMerchantDetails(merchant.getDetails());
+        check.setProducts(products);
         check.setMerchant(merchant);
         check.setDate(new Date());
+        if (details != null) {
+            check.setInn(details.getInn());
+            check.setAddress(details.getAddress());
+            check.setName(details.getName());
+            check.setTaxPercent(details.getTaxPercent());
+            check.setTaxType(details.getTaxType());
+        }
+        if (shift != null) {
+            check.setEmployeeName(shift.getEmployeeName());
+        }
 
-        Optional<Shift> opt = shiftService.getCurrentShift(merchant);
-        opt.ifPresent(check::setShift);
+        Long id = checkRepository.save(check).getId();
+        check.setId(id);
 
-        checkRepository.save(check);
+        return check;
     }
 
     public List<Check> getCheckHistory(Merchant merchant, OrderColumn orderColumn) {

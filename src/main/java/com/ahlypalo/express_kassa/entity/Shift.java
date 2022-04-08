@@ -15,6 +15,4 @@ public class Shift {
     private String employeeName;
     private Date startDate;
     private Date endDate;
-    @ManyToOne
-    private Merchant merchant;
 }
