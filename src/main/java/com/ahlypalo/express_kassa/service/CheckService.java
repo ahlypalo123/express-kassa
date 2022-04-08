@@ -6,12 +6,13 @@ import com.ahlypalo.express_kassa.exception.ApiException;
 import com.ahlypalo.express_kassa.repository.CheckRepository;
 import com.ahlypalo.express_kassa.repository.ProductRepository;
 import com.ahlypalo.express_kassa.repository.ReceiptProductRepository;
+import org.springframework.boot.web.servlet.filter.OrderedRequestContextFilter;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.yaml.snakeyaml.util.ArrayUtils;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class CheckService {
@@ -50,6 +51,10 @@ public class CheckService {
     }
 
     public List<Check> getCheckHistory(Merchant merchant, OrderColumn orderColumn) {
-        return checkRepository.getAllByMerchant(merchant, Sort.by(orderColumn.getName()));
+        String[] columns = (String[]) Arrays.stream(OrderColumn.values())
+                .sorted(Comparator.comparingInt(e -> e == orderColumn ? 1 : 0))
+                .map(OrderColumn::getName)
+                .toArray();
+        return checkRepository.getAllByMerchant(merchant, Sort.by(columns));
     }
 }

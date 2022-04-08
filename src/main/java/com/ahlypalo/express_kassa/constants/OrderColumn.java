@@ -1,7 +1,7 @@
 package com.ahlypalo.express_kassa.constants;
 
 public enum OrderColumn {
-    EMPLOYEE_NAME("employee_name"), TOTAL("total"), DATE("date");
+    EMPLOYEE_NAME("employeeName"), TOTAL("total"), DATE("date");
 
     private String name;
 
