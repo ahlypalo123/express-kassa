@@ -52,7 +52,7 @@ public class CheckService {
 
     public List<Check> getCheckHistory(Merchant merchant, OrderColumn orderColumn) {
         Object[] objects = Arrays.stream(OrderColumn.values())
-                .sorted(Comparator.comparingInt(e -> e == orderColumn ? 1 : 0))
+                .sorted(Comparator.comparingInt(e -> e == orderColumn ? 0 : 1))
                 .map(OrderColumn::getName)
                 .toArray();
         String[] columns = Arrays.copyOf(objects, objects.length, String[].class);
