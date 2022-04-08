@@ -17,19 +17,16 @@ import java.util.Optional;
 public class CheckService {
 
     private final CheckRepository checkRepository;
-    private final ReceiptProductRepository receiptProductRepository;
 
-    public CheckService(CheckRepository checkRepository, ReceiptProductRepository receiptProductRepository) {
+    public CheckService(CheckRepository checkRepository) {
         this.checkRepository = checkRepository;
-        this.receiptProductRepository = receiptProductRepository;
     }
 
     public Check saveCheck(Check check, Merchant merchant) {
-        List<ReceiptProduct> products = (List<ReceiptProduct>) receiptProductRepository.saveAll(check.getProducts());
+        check.getProducts().forEach(c -> c.setCheck(check));
         MerchantDetails details = merchant.getDetails();
         Shift shift = merchant.getShift();
 
-        check.setProducts(products);
         check.setMerchant(merchant);
         check.setDate(new Date());
         if (details != null) {
@@ -43,10 +40,7 @@ public class CheckService {
             check.setEmployeeName(shift.getEmployeeName());
         }
 
-        Long id = checkRepository.save(check).getId();
-        check.setId(id);
-
-        return check;
+        return checkRepository.save(check);
     }
 
     public List<Check> getCheckHistory(Merchant merchant, OrderColumn orderColumn) {
