@@ -17,7 +17,7 @@ public class Check {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "check")
     private List<ReceiptProduct> products;
     private Date date;
     @Enumerated(EnumType.STRING)
