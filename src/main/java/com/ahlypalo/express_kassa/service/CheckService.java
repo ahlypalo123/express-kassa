@@ -44,6 +44,7 @@ public class CheckService {
         Check c = checkRepository.save(check);
         check.getProducts().forEach(p -> p.setCheck(c));
         receiptProductRepository.saveAll(check.getProducts());
+        c.setProducts(c.getProducts());
 
         return c;
     }

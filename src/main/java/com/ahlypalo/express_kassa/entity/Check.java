@@ -1,7 +1,9 @@
 package com.ahlypalo.express_kassa.entity;
 
+import com.ahlypalo.express_kassa.config.DateSerializer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.Fetch;
@@ -23,6 +25,7 @@ public class Check {
     private Long id;
     @OneToMany(mappedBy = "check")
     private List<ReceiptProduct> products;
+    @JsonSerialize(using = DateSerializer.class)
     private Date date;
     @Enumerated(EnumType.STRING)
     private PaymentMethod paymentMethod;
