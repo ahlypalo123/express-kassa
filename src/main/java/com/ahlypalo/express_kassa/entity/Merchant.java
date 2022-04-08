@@ -23,9 +23,7 @@ public class Merchant implements UserDetails {
   private String email;
   @JsonIgnore
   private String password;
-  @OneToOne(fetch = FetchType.LAZY)
   private MerchantDetails details;
-  @OneToOne(fetch = FetchType.LAZY)
   private Shift shift;
 
   @Override
