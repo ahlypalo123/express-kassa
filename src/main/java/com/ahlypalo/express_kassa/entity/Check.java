@@ -1,7 +1,11 @@
 package com.ahlypalo.express_kassa.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.NotFound;
 
 import javax.persistence.*;
@@ -17,7 +21,7 @@ public class Check {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "check")
+    @OneToMany(mappedBy = "check")
     private List<ReceiptProduct> products;
     private Date date;
     @Enumerated(EnumType.STRING)
@@ -27,7 +31,8 @@ public class Check {
     private String employeeName;
     private Integer customerLast4;
     private BigDecimal total;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     private Merchant merchant;
     private String address;
     private String name;

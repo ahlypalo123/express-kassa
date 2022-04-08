@@ -17,6 +17,7 @@ public class ReceiptProduct {
     private String name;
     private BigDecimal price;
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     private Check check;
 
 }
