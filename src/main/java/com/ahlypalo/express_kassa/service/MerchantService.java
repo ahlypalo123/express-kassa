@@ -34,10 +34,11 @@ public class MerchantService {
   public void updateMerchantDetails(MerchantDetails details, Merchant merchant) {
     if (merchant.getDetails() != null) {
       details.setId(merchant.getDetails().getId());
+      details.setShift(merchant.getDetails().getShift());
     }
     Long id = merchantDetailsRepository.save(details).getId();
-    details.setId(id);
     if (merchant.getDetails() == null) {
+      details.setId(id);
       merchant.setDetails(details);
       merchantRepository.save(merchant);
     }

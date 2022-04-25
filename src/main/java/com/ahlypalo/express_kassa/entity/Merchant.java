@@ -25,8 +25,6 @@ public class Merchant implements UserDetails {
   private String password;
   @OneToOne
   private MerchantDetails details;
-  @OneToOne
-  private Shift shift;
 
   @Override
   @JsonIgnore

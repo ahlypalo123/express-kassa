@@ -1,9 +1,10 @@
 package com.ahlypalo.express_kassa.service;
 
 import com.ahlypalo.express_kassa.entity.Merchant;
+import com.ahlypalo.express_kassa.entity.MerchantDetails;
 import com.ahlypalo.express_kassa.entity.Shift;
 import com.ahlypalo.express_kassa.exception.ApiException;
-import com.ahlypalo.express_kassa.repository.MerchantRepository;
+import com.ahlypalo.express_kassa.repository.MerchantDetailsRepository;
 import com.ahlypalo.express_kassa.repository.ShiftRepository;
 import org.springframework.stereotype.Service;
 
@@ -13,15 +14,16 @@ import java.util.Date;
 public class ShiftService {
 
     private final ShiftRepository shiftRepository;
-    private final MerchantRepository merchantRepository;
+    private final MerchantDetailsRepository merchantDetailsRepository;
 
-    public ShiftService(ShiftRepository shiftRepository, MerchantRepository merchantRepository) {
+    public ShiftService(ShiftRepository shiftRepository, MerchantDetailsRepository merchantDetailsRepository) {
         this.shiftRepository = shiftRepository;
-        this.merchantRepository = merchantRepository;
+        this.merchantDetailsRepository = merchantDetailsRepository;
     }
 
     public Shift openShift(String employeeName, Merchant merchant) {
-        if (merchant.getShift() != null) {
+        MerchantDetails details = merchant.getDetails();
+        if (details.getShift() != null) {
             throw new ApiException("You have an opened shift");
         }
         Shift shift = new Shift();
@@ -29,19 +31,20 @@ public class ShiftService {
         shift.setEmployeeName(employeeName);
         Long id = shiftRepository.save(shift).getId();
         shift.setId(id);
-        merchant.setShift(shift);
-        merchantRepository.save(merchant);
+        details.setShift(shift);
+        merchantDetailsRepository.save(details);
         return shift;
     }
 
     public void closeShift(Merchant merchant) {
-        if (merchant.getShift() == null) {
+        MerchantDetails details = merchant.getDetails();
+        if (details.getShift() == null) {
             throw new ApiException("You have no opened shift");
         }
-        Shift current = merchant.getShift();
+        Shift current = details.getShift();
         current.setEndDate(new Date());
         shiftRepository.save(current);
-        merchant.setShift(null);
-        merchantRepository.save(merchant);
+        details.setShift(null);
+        merchantDetailsRepository.save(details);
     }
 }

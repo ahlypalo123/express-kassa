@@ -17,4 +17,6 @@ public class MerchantDetails {
     private BigDecimal taxPercent;
     private String inn;
     private String taxType;
+    @OneToOne(cascade = CascadeType.ALL)
+    private Shift shift;
 }

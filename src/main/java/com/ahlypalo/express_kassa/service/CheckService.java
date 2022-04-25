@@ -27,7 +27,7 @@ public class CheckService {
 
     public Check saveCheck(Check check, Merchant merchant) {
         MerchantDetails details = merchant.getDetails();
-        Shift shift = merchant.getShift();
+        Shift shift = merchant.getDetails().getShift();
 
         check.setMerchant(merchant);
         check.setDate(new Date());
