@@ -56,6 +56,7 @@ public class CheckService {
                 .map(OrderColumn::getName)
                 .toArray();
         String[] columns = Arrays.copyOf(objects, objects.length, String[].class);
-        return checkRepository.getAllByMerchant(merchant, Sort.by(columns));
+        Sort sort = Sort.by(Sort.Direction.DESC, columns);
+        return checkRepository.getAllByMerchant(merchant, sort);
     }
 }

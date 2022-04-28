@@ -16,6 +16,9 @@ public class ReceiptProduct {
     private Long id;
     private String name;
     private BigDecimal price;
+    private Integer count;
+    @OneToOne
+    private Product product;
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
     private Check check;

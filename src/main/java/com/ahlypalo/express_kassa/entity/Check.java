@@ -30,6 +30,8 @@ public class Check {
     @Enumerated(EnumType.STRING)
     private PaymentMethod paymentMethod;
     private Float discount;
+    private Float cash;
+    private Float change;
     private String customerName;
     private String employeeName;
     private Integer customerLast4;

@@ -1,5 +1,6 @@
 package com.ahlypalo.express_kassa.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -16,6 +17,7 @@ public class Product {
   private BigDecimal price;
   private String barCode;
   private String photoUrl;
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JsonIgnore
   private Merchant merchant;
 }
