@@ -26,27 +26,11 @@ public class CheckService {
     }
 
     public Check saveCheck(Check check, Merchant merchant) {
-        MerchantDetails details = merchant.getDetails();
-        Shift shift = merchant.getDetails().getShift();
-
         check.setMerchant(merchant);
-        check.setDate(new Date());
-        if (details != null) {
-            check.setInn(details.getInn());
-            check.setAddress(details.getAddress());
-            check.setName(details.getName());
-            check.setTaxPercent(details.getTaxPercent());
-            check.setTaxType(details.getTaxType());
-        }
-        if (shift != null) {
-            check.setEmployeeName(shift.getEmployeeName());
-        }
-
         Check c = checkRepository.save(check);
         check.getProducts().forEach(p -> p.setCheck(c));
-        receiptProductRepository.saveAll(check.getProducts());
-        c.setProducts(c.getProducts());
-
+        List<ReceiptProduct> products = (List<ReceiptProduct>) receiptProductRepository.saveAll(check.getProducts());
+        c.setProducts(products);
         return c;
     }
 
