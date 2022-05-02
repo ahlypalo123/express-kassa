@@ -33,7 +33,7 @@ public class CheckController {
 
     @PutMapping
     public Check updateCheck(@RequestBody Check check, Merchant merchant) {
-        return checkService.updateCheck(check);
+        return checkService.updateCheck(check, merchant);
     }
 
     @DeleteMapping

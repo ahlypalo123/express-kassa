@@ -38,20 +38,27 @@ public class CheckService {
         c.setTotal(check.getTotal());
 
         c = checkRepository.save(c);
+
         saveProducts(c, check.getProducts());
+
         return c;
     }
 
-    public void saveProducts(Check check, List<ReceiptProduct> products) {
+    private void saveProducts(Check check, List<ReceiptProduct> products) {
         products.forEach(p -> p.setCheck(check));
         products = (List<ReceiptProduct>) receiptProductRepository.saveAll(products);
         check.setProducts(products);
     }
 
-    public Check updateCheck(Check check) {
-        Check c = checkRepository.save(check);
-        saveProducts(c, check.getProducts());
-        return c;
+    public Check updateCheck(Check check, Merchant merchant) {
+        check.setMerchant(merchant);
+        check = checkRepository.save(check);
+
+//        products.forEach(p -> p.setCheck(check));
+//        products = (List<ReceiptProduct>) receiptProductRepository.saveAll(products);
+//        check.setProducts(products);
+
+        return check;
     }
 
     public List<Check> getCheckHistory(Merchant merchant, OrderColumn orderColumn) {
