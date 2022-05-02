@@ -25,12 +25,31 @@ public class CheckService {
         this.receiptProductRepository = receiptProductRepository;
     }
 
-    public Check saveCheck(Check check, Merchant merchant) {
-        check.setMerchant(merchant);
+    public Check createCheck(Check check, Merchant merchant) {
+        Check c = new Check();
+        MerchantDetails details = merchant.getDetails();
+        c.setInn(details.getInn());
+        c.setName(details.getName());
+        c.setEmployeeName(details.getShift().getEmployeeName());
+        c.setAddress(details.getAddress());
+        c.setTaxType(details.getTaxType());
+        c.setDate(new Date());
+        c.setTotal(check.getTotal());
+
+        c = checkRepository.save(c);
+        saveProducts(c, check.getProducts());
+        return c;
+    }
+
+    public void saveProducts(Check check, List<ReceiptProduct> products) {
+        products.forEach(p -> p.setCheck(check));
+        products = (List<ReceiptProduct>) receiptProductRepository.saveAll(products);
+        check.setProducts(products);
+    }
+
+    public Check updateCheck(Check check) {
         Check c = checkRepository.save(check);
-        check.getProducts().forEach(p -> p.setCheck(c));
-        List<ReceiptProduct> products = (List<ReceiptProduct>) receiptProductRepository.saveAll(check.getProducts());
-        c.setProducts(products);
+        saveProducts(c, check.getProducts());
         return c;
     }
 

@@ -2,13 +2,8 @@ package com.ahlypalo.express_kassa.entity;
 
 import com.ahlypalo.express_kassa.config.DateSerializer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.NotFound;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -23,7 +18,7 @@ public class Check {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToMany(mappedBy = "check")
+    @OneToMany(mappedBy = "check", cascade = CascadeType.ALL)
     private List<ReceiptProduct> products;
     @JsonSerialize(using = DateSerializer.class)
     private Date date;
