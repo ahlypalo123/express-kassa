@@ -32,6 +32,7 @@ public class CheckService {
         c.setName(details.getName());
         c.setEmployeeName(details.getShift().getEmployeeName());
         c.setAddress(details.getAddress());
+        c.setMerchant(merchant);
         c.setTaxType(details.getTaxType());
         c.setDate(new Date());
         c.setTotal(check.getTotal());
