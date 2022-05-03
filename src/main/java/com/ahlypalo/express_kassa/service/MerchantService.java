@@ -31,17 +31,17 @@ public class MerchantService {
     merchantRepository.save(merchant);
   }
 
-  public void updateMerchantDetails(MerchantDetails details, Merchant merchant) {
+  public MerchantDetails updateMerchantDetails(MerchantDetails details, Merchant merchant) {
     if (merchant.getDetails() != null) {
       details.setId(merchant.getDetails().getId());
       details.setShift(merchant.getDetails().getShift());
     }
-    Long id = merchantDetailsRepository.save(details).getId();
+    MerchantDetails res = merchantDetailsRepository.save(details);
     if (merchant.getDetails() == null) {
-      details.setId(id);
-      merchant.setDetails(details);
+      merchant.setDetails(res);
       merchantRepository.save(merchant);
     }
+    return res;
   }
 
   public void updatePassword(String email, String password) {

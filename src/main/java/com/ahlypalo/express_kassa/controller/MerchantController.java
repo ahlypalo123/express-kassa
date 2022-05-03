@@ -22,8 +22,8 @@ public class MerchantController {
   }
 
   @PutMapping
-  public void updateMerchantDetails(Merchant merchant, @RequestBody MerchantDetails details) {
-    merchantService.updateMerchantDetails(details, merchant);
+  public MerchantDetails updateMerchantDetails(Merchant merchant, @RequestBody MerchantDetails details) {
+    return merchantService.updateMerchantDetails(details, merchant);
   }
 
   @PutMapping("/update-password")
