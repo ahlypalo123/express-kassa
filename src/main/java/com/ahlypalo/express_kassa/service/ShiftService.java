@@ -5,6 +5,7 @@ import com.ahlypalo.express_kassa.entity.MerchantDetails;
 import com.ahlypalo.express_kassa.entity.Shift;
 import com.ahlypalo.express_kassa.exception.ApiException;
 import com.ahlypalo.express_kassa.repository.MerchantDetailsRepository;
+import com.ahlypalo.express_kassa.repository.MerchantRepository;
 import com.ahlypalo.express_kassa.repository.ShiftRepository;
 import org.springframework.stereotype.Service;
 
@@ -15,14 +16,20 @@ public class ShiftService {
 
     private final ShiftRepository shiftRepository;
     private final MerchantDetailsRepository merchantDetailsRepository;
+    private final MerchantRepository merchantRepository;
 
-    public ShiftService(ShiftRepository shiftRepository, MerchantDetailsRepository merchantDetailsRepository) {
+    public ShiftService(ShiftRepository shiftRepository, MerchantDetailsRepository merchantDetailsRepository,
+                        MerchantRepository merchantRepository) {
         this.shiftRepository = shiftRepository;
         this.merchantDetailsRepository = merchantDetailsRepository;
+        this.merchantRepository = merchantRepository;
     }
 
     public Shift openShift(String employeeName, Merchant merchant) {
         MerchantDetails details = merchant.getDetails();
+        if (details == null) {
+            details = new MerchantDetails();
+        }
         if (details.getShift() != null) {
             throw new ApiException("You have an opened shift");
         }
@@ -32,7 +39,11 @@ public class ShiftService {
         Long id = shiftRepository.save(shift).getId();
         shift.setId(id);
         details.setShift(shift);
-        merchantDetailsRepository.save(details);
+        details = merchantDetailsRepository.save(details);
+        if (merchant.getDetails() == null) {
+            merchant.setDetails(details);
+            merchantRepository.save(merchant);
+        }
         return shift;
     }
 
