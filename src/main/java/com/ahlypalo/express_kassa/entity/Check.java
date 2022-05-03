@@ -27,6 +27,7 @@ public class Check {
     private Float discount;
     private Float cash;
     private Float change;
+    private boolean completed;
     private String customerName;
     private String employeeName;
     private Integer customerLast4;

@@ -52,6 +52,7 @@ public class CheckService {
 
     public Check updateCheck(Check check, Merchant merchant) {
         check.setMerchant(merchant);
+        check.setCompleted(true);
         check = checkRepository.save(check);
 
 //        products.forEach(p -> p.setCheck(check));
