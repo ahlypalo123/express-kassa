@@ -34,8 +34,10 @@ public class CheckService {
         c.setAddress(details.getAddress());
         c.setMerchant(merchant);
         c.setTaxType(details.getTaxType());
-        c.setDate(new Date());
+
         c.setTotal(check.getTotal());
+        c.setCash(check.getCash());
+        c.setPaymentMethod(check.getPaymentMethod());
 
         c = checkRepository.save(c);
 
