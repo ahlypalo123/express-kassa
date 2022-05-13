@@ -2,6 +2,7 @@ package com.ahlypalo.express_kassa.config;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,6 +21,11 @@ public class Config {
   @Bean
   public SecurityContextHolderAwareRequestFilter securityContextHolderAwareRequestFilter() {
     return new SecurityContextHolderAwareRequestFilter();
+  }
+
+  @Bean
+  public ObjectMapper objectMapper() {
+    return new ObjectMapper();
   }
 
   @Bean
