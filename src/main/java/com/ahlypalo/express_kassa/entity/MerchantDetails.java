@@ -1,9 +1,11 @@
 package com.ahlypalo.express_kassa.entity;
 
+import com.ahlypalo.express_kassa.config.HashMapConverter;
 import lombok.Data;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.Map;
 
 @Entity
 @Data
@@ -19,4 +21,7 @@ public class MerchantDetails {
     private String taxType;
     @OneToOne(cascade = CascadeType.ALL)
     private Shift shift;
+    @Convert(converter = HashMapConverter.class)
+    @Column(columnDefinition="text")
+    private Map<String, Object> data;
 }

@@ -1,13 +1,11 @@
 package com.ahlypalo.express_kassa.entity;
 
-import com.ahlypalo.express_kassa.config.JsonNodeDeserializer;
-import com.ahlypalo.express_kassa.config.JsonNodeSerializer;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.ahlypalo.express_kassa.config.HashMapConverter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Map;
 
 @Entity
 @Data
@@ -16,10 +14,12 @@ public class ReceiptTemplate {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     private Merchant merchant;
-    @JsonSerialize(using = JsonNodeSerializer.class)
-    @JsonDeserialize(using = JsonNodeDeserializer.class)
-    private JsonNode node;
+    private boolean isActive = false;
+    @Convert(converter = HashMapConverter.class)
+    @Column(columnDefinition="text")
+    private Map<String, Object> data;
 
 }

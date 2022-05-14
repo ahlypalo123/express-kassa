@@ -1,6 +1,7 @@
 package com.ahlypalo.express_kassa.entity;
 
 import com.ahlypalo.express_kassa.config.DateSerializer;
+import com.ahlypalo.express_kassa.config.HashMapConverter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Data;
@@ -9,6 +10,7 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Entity
 @Table(name = "fiscal_check")
@@ -40,6 +42,12 @@ public class Check {
     private BigDecimal taxPercent;
     private String inn;
     private String taxType;
+    @Convert(converter = HashMapConverter.class)
+    @Column(columnDefinition="text")
+    private Map<String, Object> data;
+    @Convert(converter = HashMapConverter.class)
+    @Column(columnDefinition="text")
+    private Map<String, Object> merchantData;
 
     enum PaymentMethod {
         CASH, CARD
