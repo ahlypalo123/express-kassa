@@ -1,7 +1,5 @@
 package com.ahlypalo.express_kassa.controller;
 
-import com.ahlypalo.express_kassa.constants.HttpHeaders;
-import com.ahlypalo.express_kassa.constants.ProduceView;
 import com.ahlypalo.express_kassa.entity.Merchant;
 import com.ahlypalo.express_kassa.entity.ReceiptTemplate;
 import com.ahlypalo.express_kassa.repository.ReceiptTemplateRepository;
@@ -11,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("")
 public class ReceiptTemplateController {
 
     private final ReceiptTemplateRepository receiptTemplateRepository;
@@ -24,8 +21,8 @@ public class ReceiptTemplateController {
     }
 
     @PostMapping("receipt-template")
-    public void saveReceiptTemplate(@RequestBody ReceiptTemplate receiptTemplate, Merchant merchant) {
-        receiptTemplateService.addReceiptTemplate(receiptTemplate, merchant);
+    public ReceiptTemplate saveReceiptTemplate(@RequestBody ReceiptTemplate receiptTemplate, Merchant merchant) {
+        return receiptTemplateService.addReceiptTemplate(receiptTemplate, merchant);
     }
 
     @GetMapping("receipt-templates")

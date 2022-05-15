@@ -17,9 +17,12 @@ public class ReceiptTemplateService {
         this.receiptTemplateRepository = receiptTemplateRepository;
     }
 
-    public void addReceiptTemplate(ReceiptTemplate receiptTemplate, Merchant merchant) {
+    public ReceiptTemplate addReceiptTemplate(ReceiptTemplate receiptTemplate, Merchant merchant) {
         receiptTemplate.setMerchant(merchant);
-        receiptTemplateRepository.save(receiptTemplate);
+        if (receiptTemplate.isActive()) {
+            deactivateCurrent(merchant);
+        }
+        return receiptTemplateRepository.save(receiptTemplate);
     }
 
     public ReceiptTemplate getActive(Merchant merchant) {
@@ -27,7 +30,7 @@ public class ReceiptTemplateService {
                 .orElseThrow(() -> new ApiException("Receipt not found"));
     }
 
-    public void setActiveTemplate(Long id, Merchant merchant) {
+    public void deactivateCurrent(Merchant merchant) {
         Optional<ReceiptTemplate> rtOpt = receiptTemplateRepository.findByIsActiveIsTrueAndMerchant(merchant);
         ReceiptTemplate rt;
         if (rtOpt.isPresent()) {
@@ -35,7 +38,11 @@ public class ReceiptTemplateService {
             rt.setActive(false);
             receiptTemplateRepository.save(rt);
         }
-        rt = receiptTemplateRepository.findByIdAndMerchant(id, merchant)
+    }
+
+    public void setActiveTemplate(Long id, Merchant merchant) {
+        deactivateCurrent(merchant);
+        ReceiptTemplate rt = receiptTemplateRepository.findByIdAndMerchant(id, merchant)
                 .orElseThrow(() -> new ApiException("Receipt not found"));
         rt.setActive(true);
         receiptTemplateRepository.save(rt);
