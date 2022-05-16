@@ -34,7 +34,7 @@ public class CheckService {
         c.setAddress(details.getAddress());
         c.setMerchant(merchant);
         c.setTaxType(details.getTaxType());
-        c.setMerchantData(details.getData());
+        // c.setMerchantData(details.getData());
 
         c.setTotal(check.getTotal());
         c.setCash(check.getCash());

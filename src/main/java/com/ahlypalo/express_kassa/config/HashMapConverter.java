@@ -1,13 +1,12 @@
 package com.ahlypalo.express_kassa.config;
 
-import com.ahlypalo.express_kassa.controller.HealthController;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.StringUtils;
 
 import javax.persistence.AttributeConverter;
-import java.io.IOException;
 import java.util.Map;
 
 public class HashMapConverter implements AttributeConverter<Map<String, Object>, String> {
@@ -33,7 +32,11 @@ public class HashMapConverter implements AttributeConverter<Map<String, Object>,
 
         Map<String, Object> customerInfo = null;
         try {
-            customerInfo = objectMapper.readValue(customerInfoJSON, Map.class);
+            if (StringUtils.hasText(customerInfoJSON)) {
+                customerInfo = objectMapper.readValue(customerInfoJSON, Map.class);
+            } else {
+                customerInfo = Map.of();
+            }
         } catch (Exception e) {
             logger.error("JSON reading error", e);
         }

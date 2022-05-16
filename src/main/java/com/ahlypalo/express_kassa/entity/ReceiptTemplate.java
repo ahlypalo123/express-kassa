@@ -1,14 +1,17 @@
 package com.ahlypalo.express_kassa.entity;
 
-import com.ahlypalo.express_kassa.config.HashMapConverter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.vladmihalcea.hibernate.type.json.JsonType;
 import lombok.Data;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.*;
-import java.util.Map;
 
 @Entity
 @Data
+@TypeDef(name = "json", typeClass = JsonType.class)
 public class ReceiptTemplate {
 
     @Id
@@ -18,8 +21,8 @@ public class ReceiptTemplate {
     @JsonIgnore
     private Merchant merchant;
     private boolean isActive = false;
-    @Convert(converter = HashMapConverter.class)
-    @Column(columnDefinition="text")
-    private Map<String, Object> data;
+    @Type(type = "json")
+    @Column(columnDefinition = "jsonb")
+    private JsonNode data;
 
 }
