@@ -1,5 +1,6 @@
 package com.ahlypalo.express_kassa.service;
 
+import com.ahlypalo.express_kassa.constants.ErrorCode;
 import com.ahlypalo.express_kassa.dto.AuthDto;
 import com.ahlypalo.express_kassa.dto.CodeDto;
 import com.ahlypalo.express_kassa.entity.Merchant;
@@ -23,11 +24,10 @@ public class AuthenticationService {
 
     private static final String JWT_TOKEN_SECRET = "vlk3Tmn8$Xc49dC%hp3O#x6pghf";
     private final Integer CODE_EXPIRATION_TIME_MIN = 2;
-    private final Integer CODE_RESEND_TIME_MIN = 1;
     private final LoadingCache<String, CodeDto> codes = CacheBuilder.newBuilder()
             .maximumSize(10000)
             .expireAfterWrite(CODE_EXPIRATION_TIME_MIN, TimeUnit.MINUTES)
-            .build(new CacheLoader<String, CodeDto>() {
+            .build(new CacheLoader<>() {
                 @Override
                 public CodeDto load(String key) {
                     return new CodeDto(null, null);
@@ -46,7 +46,7 @@ public class AuthenticationService {
 
     public String login(AuthDto dto) {
         Merchant m = merchantRepository.findOneByEmail(dto.getEmail())
-                .orElseThrow(() -> new ApiException("User not found"));
+                .orElseThrow(() -> new ApiException("User not found", ErrorCode.USER_NOT_FOUND));
         return createToken(m.getEmail());
     }
 
@@ -78,7 +78,7 @@ public class AuthenticationService {
             Calendar c = Calendar.getInstance();
             c.add(Calendar.MINUTE, 1);
             if (codes.get(email).getCreated().isBefore(new DateTime(c))) {
-                throw new ApiException("Please wait. Code has already been sent to this email.");
+                throw new ApiException("Please wait. Code has already been sent to this email.", ErrorCode.VERIFICATION_CODE_ALREADY_SENT);
             }
         }
         final int max = 9999;
@@ -92,7 +92,7 @@ public class AuthenticationService {
         Integer expected;
         expected = codes.get(email).getCode();
         if(!code.equals(expected)) {
-            throw new ApiException("Invalid code");
+            throw new ApiException("Invalid code", ErrorCode.INVALID_VERIFICATION_CODE);
         }
     }
 

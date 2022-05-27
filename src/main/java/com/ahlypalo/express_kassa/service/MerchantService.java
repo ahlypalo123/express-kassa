@@ -1,5 +1,6 @@
 package com.ahlypalo.express_kassa.service;
 
+import com.ahlypalo.express_kassa.constants.ErrorCode;
 import com.ahlypalo.express_kassa.entity.Merchant;
 import com.ahlypalo.express_kassa.entity.MerchantDetails;
 import com.ahlypalo.express_kassa.exception.ApiException;
@@ -7,8 +8,6 @@ import com.ahlypalo.express_kassa.repository.MerchantDetailsRepository;
 import com.ahlypalo.express_kassa.repository.MerchantRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class MerchantService {
@@ -25,7 +24,7 @@ public class MerchantService {
 
   public void saveMerchant(Merchant merchant) {
     merchantRepository.findOneByEmail(merchant.getEmail()).ifPresent(e -> {
-      throw new ApiException("Merchant with this email is already exists");
+      throw new ApiException("Merchant with this email is already exists", ErrorCode.MERCHANT_WITH_THIS_EMAIL_EXISTS);
     });
     merchant.setPassword(bCryptPasswordEncoder.encode(merchant.getPassword()));
     merchantRepository.save(merchant);
@@ -46,7 +45,7 @@ public class MerchantService {
 
   public void updatePassword(String email, String password) {
     Merchant merchant = merchantRepository.findOneByEmail(email)
-            .orElseThrow(() -> new ApiException("Merchant not found"));
+            .orElseThrow(() -> new ApiException("Merchant not found", ErrorCode.MERCHANT_NOT_FOUND));
     merchant.setPassword(bCryptPasswordEncoder.encode(password));
     merchantRepository.save(merchant);
   }
@@ -54,7 +53,7 @@ public class MerchantService {
   public MerchantDetails getDetails(Merchant merchant) {
     MerchantDetails details = merchant.getDetails();
     if (details == null) {
-      throw new ApiException("Merchant details not found");
+      throw new ApiException("Merchant details not found", ErrorCode.MERCHANT_DETAILS_NOT_FOUND);
     }
     return details;
   }

@@ -2,7 +2,14 @@ package com.ahlypalo.express_kassa.exception;
 
 public class ApiException extends RuntimeException {
 
-  public ApiException(String message) {
+  private int code;
+
+  public ApiException(String message, int code) {
     super(message);
+    this.code = code;
+  }
+
+  public int getCode() {
+    return code;
   }
 }

@@ -11,6 +11,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 
+import static com.ahlypalo.express_kassa.constants.ErrorCode.YOU_DONT_HAVE_SHIFT;
+import static com.ahlypalo.express_kassa.constants.ErrorCode.YOU_HAVE_OPENED_SHIFT;
+
 @Service
 public class ShiftService {
 
@@ -29,28 +32,24 @@ public class ShiftService {
         MerchantDetails details = merchant.getDetails();
         if (details == null) {
             details = new MerchantDetails();
+            merchant.setDetails(details);
+            merchantRepository.save(merchant);
         }
         if (details.getShift() != null) {
-            throw new ApiException("You have an opened shift");
+            throw new ApiException("You have an opened shift", YOU_HAVE_OPENED_SHIFT);
         }
         Shift shift = new Shift();
         shift.setStartDate(new Date());
         shift.setEmployeeName(employeeName);
-        Long id = shiftRepository.save(shift).getId();
-        shift.setId(id);
         details.setShift(shift);
-        details = merchantDetailsRepository.save(details);
-        if (merchant.getDetails() == null) {
-            merchant.setDetails(details);
-            merchantRepository.save(merchant);
-        }
+        merchantDetailsRepository.save(details);
         return shift;
     }
 
     public void closeShift(Merchant merchant) {
         MerchantDetails details = merchant.getDetails();
         if (details.getShift() == null) {
-            throw new ApiException("You have no opened shift");
+            throw new ApiException("You don't have an opened shift", YOU_DONT_HAVE_SHIFT);
         }
         Shift current = details.getShift();
         current.setEndDate(new Date());

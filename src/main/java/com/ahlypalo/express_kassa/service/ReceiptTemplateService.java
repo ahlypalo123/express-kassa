@@ -1,5 +1,6 @@
 package com.ahlypalo.express_kassa.service;
 
+import com.ahlypalo.express_kassa.constants.ErrorCode;
 import com.ahlypalo.express_kassa.entity.Merchant;
 import com.ahlypalo.express_kassa.entity.ReceiptTemplate;
 import com.ahlypalo.express_kassa.exception.ApiException;
@@ -27,7 +28,7 @@ public class ReceiptTemplateService {
 
     public ReceiptTemplate getActive(Merchant merchant) {
         return receiptTemplateRepository.findByIsActiveIsTrueAndMerchant(merchant)
-                .orElseThrow(() -> new ApiException("Receipt not found"));
+                .orElseThrow(() -> new ApiException("Receipt not found", ErrorCode.RECEIPT_NOT_FOUND));
     }
 
     public void deactivateCurrent(Merchant merchant) {
@@ -43,7 +44,7 @@ public class ReceiptTemplateService {
     public void setActiveTemplate(Long id, Merchant merchant) {
         deactivateCurrent(merchant);
         ReceiptTemplate rt = receiptTemplateRepository.findByIdAndMerchant(id, merchant)
-                .orElseThrow(() -> new ApiException("Receipt not found"));
+                .orElseThrow(() -> new ApiException("Receipt not found", ErrorCode.RECEIPT_NOT_FOUND));
         rt.setActive(true);
         receiptTemplateRepository.save(rt);
     }

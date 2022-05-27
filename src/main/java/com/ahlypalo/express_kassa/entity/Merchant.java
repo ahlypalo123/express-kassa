@@ -3,15 +3,11 @@ package com.ahlypalo.express_kassa.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Objects;
 
 @Entity
 @Data
@@ -23,7 +19,7 @@ public class Merchant implements UserDetails {
   private String email;
   @JsonIgnore
   private String password;
-  @OneToOne
+  @OneToOne(cascade = CascadeType.PERSIST)
   private MerchantDetails details;
 
   @Override

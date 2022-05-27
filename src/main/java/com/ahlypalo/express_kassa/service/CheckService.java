@@ -34,7 +34,6 @@ public class CheckService {
         c.setAddress(details.getAddress());
         c.setMerchant(merchant);
         c.setTaxType(details.getTaxType());
-        // c.setMerchantData(details.getData());
 
         c.setTotal(check.getTotal());
         c.setCash(check.getCash());
@@ -57,10 +56,6 @@ public class CheckService {
         check.setMerchant(merchant);
         check.setCompleted(true);
         check = checkRepository.save(check);
-
-//        products.forEach(p -> p.setCheck(check));
-//        products = (List<ReceiptProduct>) receiptProductRepository.saveAll(products);
-//        check.setProducts(products);
 
         return check;
     }
