@@ -28,12 +28,16 @@ public class CheckService {
     public Check createCheck(Check check, Merchant merchant) {
         Check c = new Check();
         MerchantDetails details = merchant.getDetails();
-        c.setInn(details.getInn());
-        c.setName(details.getName());
-        c.setEmployeeName(details.getShift().getEmployeeName());
-        c.setAddress(details.getAddress());
+        if (details != null) {
+            c.setInn(details.getInn());
+            c.setName(details.getName());
+            if (details.getShift() != null) {
+                c.setEmployeeName(details.getShift().getEmployeeName());
+            }
+            c.setAddress(details.getAddress());
+            c.setTaxType(details.getTaxType());
+        }
         c.setMerchant(merchant);
-        c.setTaxType(details.getTaxType());
 
         c.setTotal(check.getTotal());
         c.setCash(check.getCash());
