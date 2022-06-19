@@ -22,7 +22,4 @@ public class Product {
   @ManyToOne(fetch = FetchType.LAZY)
   @JsonIgnore
   private Merchant merchant;
-  @Convert(converter = HashMapConverter.class)
-  @Column(columnDefinition="text")
-  private Map<String, Object> data;
 }

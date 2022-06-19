@@ -42,12 +42,6 @@ public class Check {
     private BigDecimal taxPercent;
     private String inn;
     private String taxType;
-    @Convert(converter = HashMapConverter.class)
-    @Column(columnDefinition="text")
-    private Map<String, Object> data;
-    @Convert(converter = HashMapConverter.class)
-    @Column(columnDefinition="text")
-    private Map<String, Object> merchantData;
 
     enum PaymentMethod {
         CASH, CARD
