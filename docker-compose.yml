@@ -1,0 +1,15 @@
+version: "3"
+services:
+  mysqldb:
+    image: mysql:8
+    environment:
+      - MYSQL_ROOT_PASSWORD=12345
+      - MYSQL_DATABASE=expresskassa
+
+  app:
+    build: ./
+    links:
+      - mysqldb:database
+    container_name: java-app
+    ports:
+      - "8080:8080"
