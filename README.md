@@ -1,8 +1,10 @@
 # Express Kassa
 
+Проект служит серверной частью для мобильного приложения https://github.com/ahlypalo123/express-kassa-mobile
+
 В проекте используются: 
-  * Spring Boot, 
-  * Spring Security, 
+  * Spring Boot,
+  * Spring Security
   * Spring Data JPA
   * Docker
   * Flyway
