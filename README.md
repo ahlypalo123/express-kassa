@@ -9,6 +9,8 @@
   * Docker
   * Flyway
 
+Swagger UI: http://localhost:8080/swagger-ui/
+
 Примеры основных запросов:
 
   Регистрация:
