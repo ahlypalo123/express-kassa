@@ -22,7 +22,7 @@ Swagger UI: http://localhost:8080/swagger-ui/
         "password": "123456"
     }'
     
-  Авторизация:
+  Получение токена:
   
     curl --location --request POST 'http://localhost:8080/auth/login' \
     --header 'Content-Type: application/json' \
