@@ -4,6 +4,8 @@
   * Spring Boot, 
   * Spring Security, 
   * Spring Data JPA
+  * Docker
+  * Flyway
 
 Примеры основных запросов:
 
