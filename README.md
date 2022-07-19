@@ -33,7 +33,7 @@
     --header 'Authorization: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhaGx5cGFsbzEyM0BnbWFpbC5jb20iLCJpYXQiOjE2NDQyNTEwMTZ9.C869yRdrXIiZKkl_tS5YA-9ZM143w7_CRt0Ai35evcQG7wyTZ-3c_5xzf_iyU2CpDvgwZuZUIU41DMZY6H_nRA' \
     --header 'Content-Type: application/json' \
     --data-raw '{
-        "name": "Капучино",
+        "name": "Kapuchino",
         "price": "120",
         "barCode": "123456",
         "photoUrl": "http://localhost:8080/user-photos/123-123-123.jpg",
@@ -71,11 +71,9 @@
         "date": 11111111111,
         "products": [
             {
-                "id": 1,
-                "name": "Капучино",
+                "name": "Kapuchino",
                 "price": 120.00,
-                "barCode": "123456",
-                "photoUrl": "http://localhost:8080/user-photos/123-123-123.jpg"
+                "product": { "id": 1 }
             }
         ],
         "total": "240"
