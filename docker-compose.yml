@@ -1,15 +1,26 @@
 version: "3"
+
 services:
+  expresskassa-server:
+    build: .
+    container_name: expresskassa-server
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysqldb
+    networks:
+      expresskassa-server-mysql:
+
   mysqldb:
-    image: mysql:8
+    image: mysql:5.7
+    container_name: mysqldb
+    ports:
+      - "8889:3306"
+    networks:
+      expresskassa-server-mysql:
     environment:
       - MYSQL_ROOT_PASSWORD=12345
       - MYSQL_DATABASE=expresskassa
 
-  app:
-    build: ./
-    links:
-      - mysqldb:database
-    container_name: java-app
-    ports:
-      - "8080:8080"
+networks:
+  expresskassa-server-mysql:
