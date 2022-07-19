@@ -41,7 +41,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
               "/auth/**", "/",
               "/user-photos/**",
               "/actuator/**",
-              "/merchant/update-password"
+              "/merchant/update-password",
+              "/swagger-resources/**",
+              "/swagger-ui/**",
+              "/swagger-ui.html",
+              "/v2/api-docs",
+              "/webjars/**"
       ).permitAll()
       .anyRequest().authenticated();
   }

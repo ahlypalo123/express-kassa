@@ -11,6 +11,6 @@ import java.util.List;
 @Repository
 public interface CheckRepository extends CrudRepository<Check, Long> {
 
-    @Query("SELECT c FROM Check c JOIN FETCH c.products p WHERE c.merchant = :merchantId ORDER BY :orderColumn")
+    @Query("SELECT c FROM Check c JOIN FETCH c.products p WHERE c.merchant = :merchant ORDER BY :orderColumn")
     List<Check> getAllByMerchantSorting(Merchant merchant, String orderColumn);
 }
